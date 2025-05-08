@@ -1,5 +1,5 @@
 import User from "../models/user.model.js";
-
+import Message from "../models/message.model.js";
 
 
 export const GetUsers =async (req,res)=>{
@@ -36,4 +36,23 @@ export const GetUser= async(req,res)=>{
 }
 
  
+export const GetMessages= async(req,res) =>{
+    try{
+        const {id : sendMs } = req.params;
+        const MyMsId  = req.user._id;
+        const Messages = await Message.find({
+            $or:[
+                {senderMessage : sendMs ,recivedMessage : MyMsId},
+                {senderMessage:MyMsId ,recivedMessage : sendMs}
+            ]})
 
+        if(!Messages) {
+            res.status(404).json({message : "Message is not available"})
+        }
+
+        res.status(201).json(Messages)
+    }catch(error){
+        console.log("erreur au cours de exécution de la requete",error.message);
+        res.status(500).json({message:"erreur au server"})
+    }
+}

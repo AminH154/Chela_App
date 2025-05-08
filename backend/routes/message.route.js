@@ -7,7 +7,7 @@ const router=express.Router();
 router.get('/getUsers',protectRoute,GetUsers);
 router.get('/getUser',protectRoute,GetUser);
 
-
+router.get('/send/:id',protectRoute,GetMessages)
 
 
 export default router;

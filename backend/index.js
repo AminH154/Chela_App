@@ -11,7 +11,6 @@ import messageRoutes from './routes/message.route.js'
 const app = express();
 app.use(express.json())
 dotenv.config();
-app.use(express.json())
 app.use(cookieParser())
 
 

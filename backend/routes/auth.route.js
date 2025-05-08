@@ -11,8 +11,4 @@ router.put('/UpdateProfile', protectRoute ,UpdateProfile);
 
 
 
-
-
-
-
 export default router;

@@ -80,7 +80,7 @@ export const PostMessages= async(req,res)=>{
         if(!NewMessages){
             res.status(404).json({message:'erreur au cours de transmi '})
         }
-
+        await NewMessages.save();
 
         res.status(201).json(NewMessages);
 

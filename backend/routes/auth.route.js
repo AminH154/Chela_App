@@ -9,6 +9,7 @@ router.post('/logIn',LogIn);
 router.post('/logOut',LogOut);
 router.put('/UpdateProfile', protectRoute ,UpdateProfile);
 
+router.get('/isAuth',protectRoute,isAuth);
 
 
 export default router;

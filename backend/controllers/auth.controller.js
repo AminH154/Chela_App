@@ -106,3 +106,8 @@ export const  UpdateProfile =async (req,res) => {
         res.status(500).json({message :'erruer au serveur '})
     }
 }
+
+
+export const isAuth=async (req,res)=>{
+    res.status(201).json({message:"is oready auth"})
+}

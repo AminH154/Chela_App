@@ -1,0 +1,161 @@
+.login {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #596aff, #383699);
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.login_container_left {
+  flex: 1;
+  background: linear-gradient(135deg, #596aff, #383699);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.login_container_left img {
+  margin-bottom: 10px;
+}
+
+.login_container_left p {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.login_container_left span {
+  color: #fff;
+  font-weight: bold;
+}
+
+.login_container_left h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.login_container_right {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input input:focus {
+  border-color: #596aff;
+  box-shadow: 0 0 5px rgba(89, 106, 255, 0.5);
+  outline: none;
+}
+
+.input button {
+  padding: 10px 15px;
+  background-color: #596aff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.input button:hover {
+  background-color: #383699;
+  transform: scale(1.05); 
+}
+
+.input p {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
+
+.input p span {
+  color: #596aff;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.input p span:hover {
+  color: #383699;
+}
+
+.login_container_left .text {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  animation: typing 6s steps(40, end) infinite;
+  text-align: left;
+  direction: ltr;
+  border-right: none;
+  text-align: start;
+  margin-left: 120px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 20px;
+}
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #596aff;
+}
+
+.checkbox p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}

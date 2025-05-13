@@ -4,8 +4,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.route.js';
 import cookieParser from 'cookie-parser';
-import messageRoutes from './routes/message.route.js'
-import cors from "cors"
+import messageRoutes from './routes/message.route.js';
+import cors from "cors";
 
 
 const app = express();
@@ -13,6 +13,8 @@ app.use(express.json())
 dotenv.config();
 app.use(cookieParser())
 app.use(cors({
+    origin:"http://localhost:5173",
+    credentials:true,
 }))
 
 app.listen(process.env.PORT,()=>{

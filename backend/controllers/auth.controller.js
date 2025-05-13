@@ -108,6 +108,14 @@ export const  UpdateProfile =async (req,res) => {
 }
 
 
-export const isAuth=async (req,res)=>{
-    res.status(201).json({message:"is oready auth"})
+export const isAuth= (req,res)=>{
+    try{
+         res.status(201).json({message:"is oready auth"});
+
+    }catch(error){
+        console.log("error",error.message);
+        res.status(500).json({message:"erreur au service"})
+    }
+
+
 }

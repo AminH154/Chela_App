@@ -29,16 +29,28 @@ export const useAuth = create((set) =>({
         set({isSignIn : true})
         try {
             const res = await axiosIncteance.post('/auth/signUp',data);
-            console.log(res)
             set({authUser :res.data}) 
             toast.success('account created with success')    
         } catch (error) {
             toast.error(error.response.data.message)
-            console.log("erreur",error.Message)
             
         }finally{
             set({isSignIn : false})
         }
-    }
+    },
 
+   logIn : async (data) =>{
+    set({islogIn : true})
+    try{
+        console.log("login data:", data); 
+        const res = await axiosIncteance.post("/auth/logIn",data);
+        set({authUser :res.data}) 
+        toast.success('logIn with success')
+    }catch(error){
+        console.log(error.response.data);
+        toast.error(error.response.data.message);
+    }finally{
+        set({islogIn:false})
+    }
+}
 }))

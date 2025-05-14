@@ -44,35 +44,32 @@ export const SignUp =async (req,res) =>{
     }
 };
 
-export const LogIn =async (req,res) =>{
-    const {email,password} = req.body;
-    try{
-        const user = await User.findOne({email});
-        if(!user){
-            res.status(400).json({message:'ivalid  credential'});
-        };
-        const isPasswordCorrect = await bcrypt.compare(password,user.password);
-        if(!isPasswordCorrect){
-            res.status(400).json({Message:'ivalid password'});
-        };
+export const LogIn = async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: 'ivalid  credential' });
+        }
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+        if (!isPasswordCorrect) {
+            return res.status(400).json({ message: 'ivalid password' });
+        }
 
-        generateToken(user._id,res);
-        res.status(200).json({
-            message:"login with success",
-            id : user._id,
-            fullName : user.fullName,
-            email:user.email,
-            profilePic:user.profilePic,
-            
-
-        
+        generateToken(user._id, res);
+        return res.status(200).json({
+            message: "login with success",
+            id: user._id,
+            fullName: user.fullName,
+            email: user.email,
+            profilePic: user.profilePic,
         });
+    } catch (error) {
+        console.log('erreur ', error.message);
+        return res.status(500).json({ message: "erreur au service" });
     }
-    catch(error){
-        console.log('erreur ',error.message);
-        res.status(500).json({message:"erreur au service"});
-    };
 };
+
 
 export const LogOut = async (req,res) =>{
     try {

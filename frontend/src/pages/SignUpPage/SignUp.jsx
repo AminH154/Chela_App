@@ -28,18 +28,20 @@ const SignUp = () => {
     if (handleValidation()) {
       console.log("handleSubmit called with values:", values);
       signIn(values);
-    }
+     
   };
+};
 
   const handleValidation = () => {
     const { fullName, email, password } = values;
 
-    if (!validateEmail(email)) {
-      toast.error("Email invalide");
-      return false;
-    }
+   
     if (!fullName || !email || !password) {
       toast.error("Veuillez remplir tous les champs");
+      return false;
+    }
+     if (!validateEmail(email)) {
+      toast.error("Email invalide");
       return false;
     }
     if (password.length < 6) {
@@ -56,7 +58,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="login">
+    <div className="signin">
       <div className="container">
         <div className="login_container_left">
           <img src={assets.icon} alt="Logo" height={100} width={100} />
@@ -90,7 +92,7 @@ const SignUp = () => {
                 placeholder="Password"
               />
               <button type="submit">Register</button>
-              <p onClick={() => navigate("/Home")}>
+              <p onClick={() => navigate("/")}>
                 have an account? <span>Click here</span>
               </p>
             </div>

@@ -28,7 +28,7 @@ const App = () => {
        <ToastContainer/>
        <Routes>
          <Route path="/"  element={authUser ? <Home /> : navigate('/logIn') } />
-         <Route path="/signUp" element={!authUser ? <SignUp/> :  navigate('/') } />
+         <Route path="/signUp" element={<SignUp/>} />
          <Route path="/login" element={!authUser ? <LogIn/> : navigate('/')} />
 
         </Routes>

@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../store/useAuth";
 
 const ProfileUpdates = () => {
-  const { authUser } = useAuth();
+  const { authUser , ProfileUpdate } = useAuth();
   const Navigate = useNavigate();
-  const [Avatar, SetAvatar] = useState(assets.utilisateur);
+  const [profilePic, SetprofilePic] = useState(assets.utilisateur);
   const [Values, SetValues] = useState({
     bio: "hello ! this is my bio",
-    avatar: assets.utilisateur,
+    profilePic: assets.utilisateur,
   });
 
   const HandleChange = (e) => {
@@ -24,20 +24,23 @@ const ProfileUpdates = () => {
   const HandleSave = async (e) => {
     e.preventDefault();
     console.log("handleSave called with values:", Values);
+    await ProfileUpdate(Values);
+    Navigate("/");
+    console.log("Profile updated successfully");
     
   };
 
   const HandleImageChange = async (e) => {
     const file = e.target.files[0];
-    if (!file) return; // Correction ici
+    if (!file) return; 
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       const base64String = reader.result;
-      SetAvatar(base64String);
+      SetprofilePic(base64String);
       SetValues({
         ...Values,
-        avatar: base64String,
+        profilePic: base64String,
       });
     };
   };
@@ -49,7 +52,7 @@ const ProfileUpdates = () => {
           <div className="profile_header">
             <h1>Update Profile</h1>
             <label htmlFor="avatar">
-              <img src={Avatar} alt="Avatar" />
+              <img src={profilePic} alt="Avatar" />
               <p>Upload Image</p>
             </label>
             <input

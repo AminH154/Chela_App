@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { axiosIncteance } from "../lib/axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProfileUpdates from "../pages/UpdateProfile/UpdateProfile";
 
 export const useAuth = create((set) => ({
   authUser: null,
@@ -35,7 +36,7 @@ export const useAuth = create((set) => ({
     }
   },
 
-  
+
 chekAuth: async () => {
     set({ isChekingAuth: true });
     try {
@@ -83,4 +84,22 @@ chekAuth: async () => {
       set({ isSignIn: false });
     }
   },
+
+
+  ProfileUpdate : async(data)=>{
+    set({isUpdateProfile :true});
+    try {
+       const res =await axiosIncteance.put("/auth/UpdateProfile",data);
+      set({authUser:res.data});
+      toast.success("profile updated successfully");
+      
+    } catch (error) {
+      toast.error(error.response.data.message)
+      
+    }finally{
+      set({isUpdateProfile : false})
+    }
+   
+
+  }
 }));

@@ -111,6 +111,8 @@ export const isAuth = (req, res) => {
         id: req.user._id,
         fullName: req.user.fullName,
         email: req.user.email,
+        profilePic : req.user.profilePic ,
+        bio : req.user.bio,
       });
   } catch (error) {
     console.log("error", error.message);

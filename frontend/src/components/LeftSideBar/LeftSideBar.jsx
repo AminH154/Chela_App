@@ -2,6 +2,7 @@ import React  from "react";
 import "./LeftSideBar.css";
 import { assets } from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../store/useAuth";
 const LeftSideBar = () => {
   const navigate = useNavigate();
   return (

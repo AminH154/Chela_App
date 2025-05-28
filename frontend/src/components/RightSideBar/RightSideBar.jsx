@@ -5,7 +5,7 @@ import { useAuth } from "../../store/useAuth";
 
 
 const RightSideBar = () => {
-   const { logOut } = useAuth();
+   const { logOut , authUser } = useAuth();
 
   return (
     <div className="rightSideBar">
@@ -14,16 +14,17 @@ const RightSideBar = () => {
           <img
     
             alt="User Profile"
-            src={assets.profile}
+            src={authUser?.profilePic || assets.utilisateur}
+            className="user-profile-image"
           />
           <div className="status"></div>
         </div>
-        <h3>amin</h3>
-        <p>amin</p>
+        <h3>{authUser?.fullName || "User"}</h3>
+        <p>{authUser?.bio || "bio"}</p>
       </div>
       <hr />
       <p>Media</p>
-      <p>Fichier et contenus multimédias</p>
+      <p>Fichier et contenus multimédias</  p>
       <div className="deconnecte">
         <img src={assets.profile  } alt="Deconnecte" />
         <p onClick={logOut}>Deconnexion</p>

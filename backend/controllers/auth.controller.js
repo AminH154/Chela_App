@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { generateToken } from "../lib/utils.js";
 import cloudinary from "../lib/cloudinary.config.js";
 
+
 export const SignUp = async (req, res) => {
   const { email, fullName, password } = req.body;
   try {
@@ -83,7 +84,8 @@ export const UpdateProfile = async (req, res) => {
   try {
     const { bio } = req.body;
     console.log(bio);
-    const { profilePic } = req.body;
+    // Récupère profilePic depuis req.body, sinon utilise une image par défaut
+    let { profilePic } = req.body ;
     const userId = req.user._id;
     if (!profilePic) {
       res.status(400).json({ message: "proficPin is not define " });
@@ -92,7 +94,8 @@ export const UpdateProfile = async (req, res) => {
     const UploadResponse = await cloudinary.uploader.upload(profilePic);
     const UpdateUser = await User.findByIdAndUpdate(
       userId,
-      { profilePic: UploadResponse.secure_url, bio: bio },
+      { profilePic: UploadResponse.secure_url, 
+        bio: bio },
 
       { new: true }
     );

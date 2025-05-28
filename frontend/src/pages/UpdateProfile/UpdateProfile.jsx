@@ -6,12 +6,16 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../store/useAuth";
 
 const ProfileUpdates = () => {
-  const { authUser , ProfileUpdate } = useAuth();
+  const { authUser, ProfileUpdate } = useAuth();
   const Navigate = useNavigate();
-  const [profilePic, SetprofilePic] = useState(assets.utilisateur);
+
+
+  const defaultPic = authUser?.profilePic || assets.utilisateur;
+  const [profilePic, SetprofilePic] = useState(defaultPic);
+  const [isLoading, setIsLoading] = useState(false);
   const [Values, SetValues] = useState({
     bio: "hello ! this is my bio",
-    profilePic: assets.utilisateur,
+    profilePic: defaultPic,
   });
 
   const HandleChange = (e) => {
@@ -23,16 +27,23 @@ const ProfileUpdates = () => {
 
   const HandleSave = async (e) => {
     e.preventDefault();
-    console.log("handleSave called with values:", Values);
+    setIsLoading(true);
     await ProfileUpdate(Values);
+     setIsLoading(false);
     Navigate("/");
-    console.log("Profile updated successfully");
-    
   };
 
   const HandleImageChange = async (e) => {
     const file = e.target.files[0];
-    if (!file) return; 
+    if (!file) {
+      // Si aucune image sélectionnée, on remet la photo par défaut (base64)
+      SetprofilePic(assets.utilisateur);
+      SetValues({
+        ...Values,
+        profilePic: assets.utilisateur,
+      });
+      return;
+    }
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -78,7 +89,9 @@ const ProfileUpdates = () => {
               onChange={HandleChange}
               placeholder="Write a portfolio bio"
             />
-            <button type="submit">Upload</button>
+                <button type="submit" disabled={isLoading}>
+              {isLoading ? "Saving..." : "Upload"}
+            </button>
           </div>
         </form>
       </div>

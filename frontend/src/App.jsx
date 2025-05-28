@@ -26,7 +26,7 @@ const App = () => {
   }
 
   return (
-    <div className='App'>
+    <div data-theme="dark" className="App">
       <ToastContainer />
       <Routes>
         <Route path="/" element={authUser ? <Home /> : <Navigate to="/login" />} />

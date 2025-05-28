@@ -1,0 +1,16 @@
+.loader-rotate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+}
+
+.loader-rotate svg {
+  animation: rotate-loader 1s linear infinite;
+}
+
+@keyframes rotate-loader {
+  100% {
+    transform: rotate(360deg);
+  }
+}

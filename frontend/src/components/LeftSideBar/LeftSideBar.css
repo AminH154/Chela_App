@@ -1,0 +1,155 @@
+
+.leftSideBar {
+    padding: 20px;
+    background-color: #f9f9f9; 
+    border-right: 1px solid #ddd; 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
+    overflow-y: auto;
+}
+
+.ls_top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.ls_top span {
+    font-size: 25px;
+    font-weight: bold;
+    color: #3439db;
+}
+
+.ls_nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px; 
+}
+
+.ls_nav p {
+    font-size: 15px;
+    font-weight: bold;
+    color: #3439db;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); 
+}
+
+.ls_search {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    padding: 8px 12px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 20px;
+}
+
+.ls_search img {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.ls_search input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #333;
+    font-size: 14px;
+    flex: 1; 
+}
+
+.ls-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    height: calc(100% - 150px); 
+    overflow-y: auto; 
+    padding-right: 5px;
+}
+
+.friends {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #fff; 
+    border-radius: 8px; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.friends:hover {
+    background-color: #f0f0f0; 
+    transform: scale(1.02);
+}
+
+.friends img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover; 
+}
+
+.friends div {
+    display: flex;
+    flex-direction: column;
+}
+
+.friends div p {
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.friends div span {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.leftSideBar .menu {
+    position: relative;
+    padding: 10px 0px;
+}
+
+.menu .menu_list {
+    position: absolute;
+    top: 80%;
+    right: 0;
+    width: 90px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);  
+    display: none;
+    opacity: 0; 
+    transform: translateY(-10px); 
+    transition: opacity 0.3s ease, transform 0.3s ease; 
+}
+
+.menu_list hr {
+    border: none;
+    height: 1px;
+    background: #a4a4a4;
+    margin: 8px 0px;
+}
+
+.menu_list p {
+    cursor: pointer;
+    font-size: 14px;
+    transition: color 0.3s ease, transform 0.3s ease; 
+}
+
+.menu_list p:hover {
+    color: #3439db; 
+    transform: scale(1.05); 
+}
+
+.menu:hover .menu_list {
+    display: block;
+    opacity: 1 ;
+    transform: translateY(0); 
+}

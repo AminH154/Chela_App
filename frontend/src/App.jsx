@@ -1,40 +1,41 @@
-import React,{ useEffect } from 'react'
-import './App.css'
-import { Routes, Route, useNavigate } from "react-router-dom";
+import React, { useEffect } from 'react';
+import './App.css';
+import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import  {useAuth} from "./store/useAuth.js"
-import SignUp  from "../src/pages/SignUpPage/SignUp.jsx"
-import LogIn from "../src/pages/LoginPage/Login.jsx"
-import Home from "../src/pages/Home/Home.jsx"
-import {Loader} from "lucide-react"
+import { useAuth } from "./store/useAuth.js";
+import SignUp from "../src/pages/SignUpPage/SignUp.jsx";
+import LogIn from "../src/pages/LoginPage/Login.jsx";
+import Home from "../src/pages/Home/Home.jsx";
+import { Loader } from "lucide-react";
+import ProfileUpdates from './pages/UpdateProfile/UpdateProfile.jsx';
+
 const App = () => {
-  const {authUser,chekAuth,isChekingAuth} = useAuth();
-  const navigate = useNavigate();
-  useEffect(()=>{
+  const { authUser, chekAuth, isChekingAuth } = useAuth();
+
+  useEffect(() => {
     chekAuth();
-  },[chekAuth])
-  console.log(authUser)
-  if(isChekingAuth && !authUser){
-    return <div>
-         <Loader/>
-    </div>
+  }, [chekAuth]);
+
+  if (!authUser && isChekingAuth) {
+    return (
+      <div className="loader-rotate">
+        <Loader size={64} color="#596aff" />
+      </div>
+    );
   }
 
-  console.log(authUser)
   return (
-   
     <div className='App'>
-       <ToastContainer/>
-       <Routes>
-         <Route path="/"  element={authUser ? <Home /> : navigate('/logIn') } />
-         <Route path="/signUp" element={<SignUp/>} />
-         <Route path="/login" element={!authUser ? <LogIn/> : navigate('/')} />
-
-        </Routes>
-      
+      <ToastContainer />
+      <Routes>
+        <Route path="/" element={authUser ? <Home /> : <Navigate to="/login" />} />
+        <Route path="/signUp" element={!authUser ? <SignUp /> : <Navigate to="/" />} />
+        <Route path="/login" element={!authUser ? <LogIn /> : <Navigate to="/" />} />
+        <Route path="/profileUpdate" element={<ProfileUpdates />} />
+      </Routes>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

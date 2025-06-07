@@ -84,7 +84,6 @@ export const UpdateProfile = async (req, res) => {
   try {
     const { bio } = req.body;
     console.log(bio);
-    // Récupère profilePic depuis req.body, sinon utilise une image par défaut
     let { profilePic } = req.body ;
     const userId = req.user._id;
     if (!profilePic) {

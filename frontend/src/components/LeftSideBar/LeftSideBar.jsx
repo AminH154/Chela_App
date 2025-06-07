@@ -1,24 +1,34 @@
-import React  from "react";
+import React, { useEffect } from "react";
 import "./LeftSideBar.css";
 import { assets } from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../store/useAuth";
+import { useChatStore } from "../../store/useChatStore";
+import { useAuthStore } from './../../store/useAuthStore';
+
 const LeftSideBar = () => {
   const navigate = useNavigate();
+  const { selectedUser, getUsers,users, isUserLoding, setSelectedUser } = useChatStore();
+  const { OnLineUsers } = useAuthStore();
+  useEffect(() => {
+    getUsers();
+  }, [getUsers]);
+
+  if (isUserLoding) return <div className="loader-rotate">Loading...</div>;
+
   return (
     <div className="leftSideBar">
       <div className="ls_nav">
         <div className="ls_top">
           <img src={assets.icon} alt="" height={40} width={40} />
           <p>
-            <span>U</span>ni Market_chat
+            <span>U</span>chat_ai
           </p>
         </div>
 
         <div className="menu">
           <img src={assets.menu} alt="" height={40} width={40} />
           <div className="menu_list">
-            <p  onClick={() => navigate("/profileUpdate")}>Edit Profile</p>
+            <p onClick={() => navigate("/profileUpdate")}>Edit Profile</p>
             <hr />
             <p>Logout</p>
           </div>
@@ -29,16 +39,22 @@ const LeftSideBar = () => {
         <input type="text" placeholder="Search ..." />
       </div>
       <div className="ls-list">
-            <div className="friends ">
-              <img src={assets.profile} alt="" />
+        <div className="friends">
+          {users?.map((user) => (
+            <button key={user._id} onClick={() => setSelectedUser(user)} 
+            className={`friend ${selectedUser?._id === user._id ? "active" : ""}`}>
+              <img src={user.profilePic || assets.profile} alt="" />
               <div>
-                 <p>amin</p>
-                 <span>En ligne</span>
-
+                <p>{user.fullName || "User"}</p>
+                {OnLineUsers.includes(user._id) ? (
+                  <span className="online">En ligne</span>
+                ) : (
+                  <span className="offline">Hors ligne</span>
+                )}
               </div>
-              
-            </div>
-  
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

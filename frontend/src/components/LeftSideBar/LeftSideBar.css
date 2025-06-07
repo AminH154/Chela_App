@@ -68,48 +68,53 @@
     padding-right: 5px;
 }
 
-.friends {
+.friends button {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: none;
+    background: transparent;
     cursor: pointer;
-    font-size: 14px;
-    background-color: #fff; 
-    border-radius: 8px; 
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    border-radius: 8px;
+    transition: background 0.2s;
+    margin-bottom: 6px;
 }
-
-.friends:hover {
-    background-color: #f0f0f0; 
-    transform: scale(1.02);
-}
-
-.friends img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover; 
-}
-
-.friends div {
-    display: flex;
-    flex-direction: column;
-}
-
-.friends div p {
+.friend.active {
+    background: #e6edff;
+    border-left: 4px solid #596aff;
     font-weight: bold;
-    color: #333;
+    color: #2d2d2d;
+    transition: background 0.2s, border-left 0.2s;
+}
+
+.friend.active img {
+    border: 2px solid #596aff;
+}
+
+.friends button:hover {
+    background: #f0f4ff;
+}
+
+.friends button img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid green;
+}
+
+.friends button p {
+    font-weight: 500;
     margin: 0;
 }
 
-.friends div span {
+.friends button span {
     font-size: 12px;
-    color: #666;
-    margin-top: 4px;
+    color: #6c6c6c;
 }
-
 .leftSideBar .menu {
     position: relative;
     padding: 10px 0px;

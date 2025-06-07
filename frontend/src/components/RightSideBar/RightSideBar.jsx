@@ -1,10 +1,10 @@
 import React from "react";
 import "./RightSideBar.css";
 import { assets } from "../../assets/assets";
-import { useAuth } from "../../store/useAuth";
+import {  useAuthStore } from "../../store/useAuthStore";
 
 const RightSideBar = () => {
-  const { logOut, authUser } = useAuth();
+  const { logOut, authUser } =useAuthStore();
 
   return (
     <div className="rightSideBar">

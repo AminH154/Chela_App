@@ -3,10 +3,10 @@ import "./UpdateProfile.css";
 import { assets } from "../../assets/assets";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../store/useAuth";
+import { useAuthStore} from "../../store/useAuthStore";
 
 const ProfileUpdates = () => {
-  const { authUser, ProfileUpdate } = useAuth();
+  const { authUser, ProfileUpdate } = useAuthStore();
   const Navigate = useNavigate();
 
 

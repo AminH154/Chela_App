@@ -1,57 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Chat.css";
 import { assets } from "../../assets/assets";
+import { useChatStore } from "../../store/useChatStore";
+import { useAuthStore } from "../../store/useAuthStore";
+import ChatHeader from "../../components/ChatHeader/ChatHeader";
+import ChatInput from "../../components/ChatInput/ChatInput";
+import ChatSkeletons from "../ChatSkeletons/ChatSkeletons";
+import MessagesInput from "../MessagesInput/MessagesInput";
+const Chat = () => {
+  const {selectedUser,isMessagesLoading,messages,getMessages,setSelectedUser} = useChatStore();
+  const {OnLineUsers} = useAuthStore();
 
-const Chat = ({name,avatar}) => {
+  useEffect(()=>{
+    getMessages(selectedUser._id);
+  },[selectedUser,getMessages]);
+
+
+  if (isMessagesLoading) return <div className="chat">
+    <ChatHeader />
+    <ChatSkeletons messages={messages} />
+    <MessagesInput/>
+  </div>;
+
+
 
   return (
     <div className="chat">
-      <div className="chat_user">
-        <div style={{ position: "relative" }}>
-          <img src={avatar} alt="User Profile" />
-          <div className="status"></div>
-        </div>
-        <div>
-          <p>{name}</p>
-          <span>En ligne</span>
-        </div>
-        <div className="chatuserh">
-          <img src={assets.help} alt="Help Icon" />
-        </div>
-      </div>
-      <div className="chat-msg">
-        <div className="s-msg">
-          <p className="msg">hello is me i alaways remember you</p>
-          <div>
-            <img src={assets.profile} alt="" height={30} width={30} />
-            <p>2.30 PM</p>
-          </div>
-        </div>
-        <div className="r-msg">
-          <p className="msg">hello is me i alaways remember you</p>
-          <div>
-            <img src={assets.profile} alt="" height={30} width={30} />
-            <p >2.30 PM</p>
-          </div>
-        </div>
-        <div className="s-msg">
-            <img src={assets.fa} alt="" />
-          <div>
-            <img src={assets.profile} alt="" height={30} width={30} />
-            <p >2.30 PM</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="chat_message">
-        <input type="text " placeholder="send a message" />
-        <input type="file " id="img" accept="image/png , image/jpeg" hidden />
-        <div className="img"></div>
-        <label htmlFor="image">
-          <img src={assets.image} alt="" height={30} width={30} />
-        </label>
-        <img src={assets.dm} alt="" height={30} width={30} className="dm" />
-      </div>
+      <ChatHeader />
+      <ChatInput />
+      <MessagesInput />
     </div>
   );
 };

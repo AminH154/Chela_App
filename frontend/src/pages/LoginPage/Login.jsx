@@ -3,11 +3,11 @@ import "./Login.css";
 import { assets } from "../../assets/assets";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../store/useAuth";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { authUser, islogIn, logIn } = useAuth();
+  const { authUser, islogIn, logIn } = useAuthStore();
   const [values, setValues] = useState({
     email: "",
     password: "",

@@ -2,14 +2,15 @@ import { create } from "zustand";
 import { axiosIncteance } from "../lib/axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ProfileUpdates from "../pages/UpdateProfile/UpdateProfile";
 
-export const useAuth = create((set) => ({
+
+export const useAuthStore = create((set) => ({
   authUser: null,
   isSignIn: false,
   islogIn: false,
   isUpdateProfile: false,
   isChekingAuth: false,
+  OnLineUsers:[],
 
   logIn: async (data) => {
     set({ islogIn: true });

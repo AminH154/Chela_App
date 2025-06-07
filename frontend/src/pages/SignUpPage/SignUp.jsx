@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import "./SignUp.css"
-import { useAuth } from "../../store/useAuth";
+import { useAuthStore } from "../../store/useAuthStore";
 const SignUp = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
@@ -12,7 +12,7 @@ const SignUp = () => {
     fullName: "",
     password: "",
   });
-   const {signIn} = useAuth();
+   const {signIn} = useAuthStore();
 
 
 

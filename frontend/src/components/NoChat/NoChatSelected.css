@@ -1,0 +1,25 @@
+.no-chat-selected{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+     min-height: 90vh;
+    
+    
+}
+.no-chat-selected img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    animation: bounce 1.2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}

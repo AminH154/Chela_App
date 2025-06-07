@@ -7,16 +7,20 @@ import help from './help.png';
 import amin  from './amin.jpg';
 import image from './image.png';
 import profile from './profile.png';
+import noChat from './noChat.png';
 import fa from './fa.jpg';
+import x from './x.png';
 import green from './green.png';
 import utilisateur from './utilisateur.png';
 export const assets = {
+    x,
     amin,
     fa,
     dm,
     image,
     search,
     profile,
+    noChat,
     help,
     green,
     icon,

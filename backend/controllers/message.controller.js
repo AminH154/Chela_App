@@ -33,11 +33,8 @@ export const GetMessages = async (req, res) => {
             ]
         });
 
-        if (!Messages || Messages.length === 0) {
-            return res.status(404).json({ message: "Message is not available" });
-        }
-
-        res.status(200).json(Messages);
+        
+        res.status(200).json(Array.isArray(Messages) ? Messages : []);
     } catch (error) {
         console.log("erreur au cours de exécution de la requete", error.message);
         res.status(500).json({ message: "erreur au server" });

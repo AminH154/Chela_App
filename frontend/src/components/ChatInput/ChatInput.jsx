@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { assets } from "../../assets/assets";
 import "./ChatInput.css";
 import { toast } from "react-toastify";
+import { useChatStore } from "../../store/useChatStore";
 const ChatInput = () => {
+  const { SendMessage } = useChatStore();
   const [Message, SetMessage] = useState("");
   const [PhotoPic, SetPhotoPic] = useState("");
   const [File, SetFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit =async  (e) => {
     e.preventDefault();
@@ -13,6 +16,7 @@ const ChatInput = () => {
       toast.error("Please enter a message or select an image to send.");
       return;
     }
+    setIsLoading(true);
     try{
       await SendMessage({
         text: Message,   
@@ -24,6 +28,7 @@ const ChatInput = () => {
     } catch (error) {
       toast.error("Failed to send message.",error);
     }
+    setIsLoading(false);
     
   };
 
@@ -69,7 +74,11 @@ const ChatInput = () => {
           <img src={assets.image} alt="" height={30} width={30} />
         </label>
         <button type="submit" disabled={!canSend}>
-          <img src={assets.dm} alt="" height={30} width={30} className="dm" />
+          {isLoading ? (
+            <span className="loader"></span>
+          ) : (
+            <img src={assets.dm} alt="" height={30} width={30} className="dm" />
+          )}
         </button>
       </form>
     </div>

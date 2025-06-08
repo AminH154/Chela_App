@@ -1,69 +1,145 @@
 .chat_message {
-  padding: 15px;
-  background: #f7f8fa;
+  padding: 15px 20px;
+  background: #ffffff;
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   border-top: 1px solid #e3e7ee;
-  display: flex;
-  margin-top: 77%;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+  border-radius: 25px;
+  pointer-events: auto;
 }
-
 
 .chat_message form {
   display: flex;
   align-items: center;
   width: 100%;
-  gap: 12px;
+  gap: 15px;
+  padding: 0 10px;
 }
 
 .chat_message input[type="text"] {
   flex: 1;
-  padding: 10px 14px;
-  border: 1px solid #e3e7ee;
-  border-radius: 20px;
-  font-size: 16px;
+  padding: 12px 18px;
+  border: 2px solid #e3e7ee;
+  border-radius: 25px;
+  font-size: 15px;
   outline: none;
-  background: #fff;
-  transition: border 0.2s;
+  background: #f8f9fa;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
 }
 
 .chat_message input[type="text"]:focus {
-  border: 1.5px solid #596aff;
+  border: 2px solid #596aff;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(89, 106, 255, 0.1);
 }
 
 .chat_message .img img {
-  border-radius: 8px;
-  max-height: 40px;
-  max-width: 60px;
+  border-radius: 12px;
+  max-height: 45px;
+  max-width: 65px;
   object-fit: cover;
-  box-shadow: 0 2px 8px #0001;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.chat_message .img img:hover {
+  transform: scale(1.05);
 }
 
 .chat_message label {
   cursor: pointer;
   display: flex;
   align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.chat_message label:hover {
+  transform: scale(1.1);
 }
 
 .chat_message button {
   background: #596aff;
   border: none;
   border-radius: 50%;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
   cursor: pointer;
   margin-left: 4px;
+  box-shadow: 0 4px 12px rgba(89, 106, 255, 0.2);
+}
+
+.chat_message button:hover:not(:disabled) {
+  background: #4a5ae8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(89, 106, 255, 0.3);
 }
 
 .chat_message button:disabled {
   background: #bfc7e6;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .chat_message button img.dm {
   filter: invert(1);
   width: 24px;
   height: 24px;
+  transition: transform 0.2s ease;
+}
+
+.chat_message button:hover:not(:disabled) img.dm {
+  transform: scale(1.1);
+}
+
+.loader {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 3px solid #ffffff;
+  animation: spin 0.8s linear infinite;
+  box-sizing: border-box;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.chat-input-container {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* Ajoutez ceci pour limiter la largeur et centrer */
+.chat_message {
+  width: 100%;
+  max-width: 778px;
+  margin: 0 auto;
+  padding: 15px 20px;
+  background: #fff;
+  border-top: 1px solid #e3e7ee;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+  border-radius: 0;
+  position: relative;
+  pointer-events: auto;
 }

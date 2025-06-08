@@ -31,6 +31,10 @@ export const useChatStore = create((set, get)=>({
         set({isMessagesLoading:true });
         try{  
             const res = await axiosIncteance.get(`/message/${userId}`);
+            if(!res.data || res.data.length === 0){
+                toast.info("No messages found for this user");
+                return;
+            }
             set({messages: res.data});
 
     }catch(error){

@@ -7,11 +7,11 @@ import { useAuthStore } from './../../store/useAuthStore';
 
 const LeftSideBar = () => {
   const navigate = useNavigate();
-  const { selectedUser, getUsers,users, isUserLoding, setSelectedUser } = useChatStore();
+  const { selectedUser, GetUsers,users, isUserLoding, setSelectedUser } = useChatStore();
   const { OnLineUsers } = useAuthStore();
   useEffect(() => {
-    getUsers();
-  }, [getUsers]);
+    GetUsers();
+  }, [GetUsers]);
 
   if (isUserLoding) return <div className="loader-rotate">Loading...</div>;
 
@@ -43,6 +43,7 @@ const LeftSideBar = () => {
           {users?.map((user) => (
             <button key={user._id} onClick={() => setSelectedUser(user)} 
             className={`friend ${selectedUser?._id === user._id ? "active" : ""}`}>
+              
               <img src={user.profilePic || assets.profile} alt="" />
               <div>
                 <p>{user.fullName || "User"}</p>

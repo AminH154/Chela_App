@@ -3,14 +3,15 @@ import {create}
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { axiosIncteance } from "../lib/axios";
-export const useChatStore = create((set)=>({
+
+export const useChatStore = create((set, get)=>({
     messages :[],
     users:[],
     selectedUser: null,
     isUserLoding: false,
     isMessagesLoading: false,
 
-    getUsers : async()=>{
+    GetUsers : async()=>{
         set({isUserLoding: true});
         try{
             const res =await axiosIncteance.get("/message/getUsers");
@@ -41,5 +42,16 @@ export const useChatStore = create((set)=>({
     },
     setSelectedUser:(selectedUser)=>{
         set({selectedUser});
+    },
+    SendMessage:async(MessageData)=>{
+        const { selectedUser,messages } = get();
+        try{
+            const res =await axiosIncteance.post(`/message/send/${selectedUser._id}`, MessageData);
+            set({
+                messages: [...messages,res.data],
+            });
+        }catch(error){
+            toast.error(error.response?.data?.message || "Failed to send message");
+        }
     }
 }))

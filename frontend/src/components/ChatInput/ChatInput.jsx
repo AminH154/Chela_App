@@ -3,6 +3,8 @@ import { assets } from "../../assets/assets";
 import "./ChatInput.css";
 import { toast } from "react-toastify";
 import { useChatStore } from "../../store/useChatStore";
+import dayjs from "dayjs";
+
 const ChatInput = () => {
   const { SendMessage } = useChatStore();
   const [Message, SetMessage] = useState("");

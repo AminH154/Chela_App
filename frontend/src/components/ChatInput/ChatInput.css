@@ -9,6 +9,7 @@
   box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
   border-radius: 25px;
   pointer-events: auto;
+  overflow-y: auto;
 }
 
 .chat_message form {
@@ -39,7 +40,7 @@
 
 .chat_message .img img {
   border-radius: 12px;
-  max-height: 45px;
+  max-height: 50px;
   max-width: 65px;
   object-fit: cover;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
@@ -127,7 +128,9 @@
   box-shadow: none;
   border: none;
   width: 100%;
-  pointer-events: none;
+  pointer-events: auto;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
 }
 
 /* Ajoutez ceci pour limiter la largeur et centrer */
@@ -142,4 +145,5 @@
   border-radius: 0;
   position: relative;
   pointer-events: auto;
+  overflow-y: auto;
 }

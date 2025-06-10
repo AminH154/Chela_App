@@ -16,7 +16,6 @@ export const useChatStore = create((set, get)=>({
         try{
             const res =await axiosIncteance.get("/message/getUsers");
             set({users: res.data});
-            toast.success("Users loaded successfully");
 
         }catch(error){
             console.error("Error fetching users:", error);

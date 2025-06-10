@@ -120,7 +120,7 @@
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 50px;
+  bottom :40px;
   z-index: 10;
   display: flex;
   justify-content: center;
@@ -136,7 +136,8 @@
 /* Ajoutez ceci pour limiter la largeur et centrer */
 .chat_message {
   width: 100%;
-  max-width: 778px;
+  max-width: 775px;
+  height: 75px;
   margin: 0 auto;
   padding: 15px 20px;
   background: #fff;

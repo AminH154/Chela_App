@@ -9,10 +9,11 @@ import ChatInput from "../../components/ChatInput/ChatInput";
 import ChatSkeletons from "../ChatSkeletons/ChatSkeletons";
 
 const Chat = () => {
-  const { messages, selectedUser, isMessagesLoading, getMessages } = useChatStore();
-  const { OnLineUsers } = useAuthStore();
+  const { messages, selectedUser, isMessagesLoading, getMessages } =
+    useChatStore();
   const { authUser } = useAuthStore();
   const messagesEndRef = useRef(null);
+  const [selectedMsg, setSelectedMsg] = React.useState(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -26,6 +27,21 @@ const Chat = () => {
     useChatStore.setState({ messages: [] });
     getMessages(selectedUser._id);
   }, [selectedUser, getMessages]);
+
+  // Group messages by date
+  const groupMessagesByDate = (messages) => {
+    const groups = {};
+    messages.forEach((msg) => {
+      const date = dayjs(msg.createdAt).format("YYYY-MM-DD");
+      if (!groups[date]) groups[date] = [];
+      groups[date].push(msg);
+    });
+    return groups;
+  };
+
+  const grouped = groupMessagesByDate(messages);
+  const today = dayjs().format("YYYY-MM-DD");
+  const yesterday = dayjs().subtract(1, "day").format("YYYY-MM-DD");
 
   if (isMessagesLoading)
     return (
@@ -46,29 +62,54 @@ const Chat = () => {
       <div className="chat-messages">
         {messages?.length > 0 ? (
           <>
-            {messages.map((message, idx) => (
-              <div
-                key={idx}
-                className={`message ${
-                  message.senderMessage === selectedUser._id ? "sender" : "receiver"
-                }`}
-              >
-                <img
-                  src={
-                    message.recivedMessage === selectedUser._id
-                      ? selectedUser?.profilePic || assets.profile
-                      : authUser?.profilePic || assets.profile
-                  }
-                  alt="avatar"
-                />
-                <div className="message-content">
-                  <p className="message-text">{message.text}</p>
-                  {message.Image && (
-                    <img src={message.Image} alt="attachment" />
-                  )}
-                  <span className="message-time">{dayjs(message.createdAt).format("HH:mm")}</span>
+            {Object.keys(grouped).map((date) => (
+              <React.Fragment key={date}>
+                <div className="date-separator">
+                  {date === today
+                    ? "Aujourd'hui"
+                    : date === yesterday
+                    ? "Hier"
+                    : dayjs(date).format("DD MMM YYYY")}
                 </div>
-              </div>
+                {grouped[date].map((message, idx) => (
+                  <div
+                    key={message._id || idx}
+                    className={`message ${
+                      message.senderMessage === selectedUser._id
+                        ? "sender"
+                        : "receiver"
+                    }`}
+                    onClick={() => setSelectedMsg(message._id || idx)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <img
+                      src={
+                        message.recivedMessage === selectedUser._id
+                          ? selectedUser?.profilePic || assets.profile
+                          : authUser?.profilePic || assets.profile
+                      }
+                      alt="avatar"
+                    />
+                    {message.Image && !message.text ? (
+                      <img src={message.Image} alt="attachment" />
+                    ) : (
+                      <div className="message-content">
+                        {message.text && (
+                          <p className="message-text">{message.text}</p>
+                        )}
+                        {message.Image && (
+                          <img src={message.Image} alt="attachment" />
+                        )}
+                      </div>
+                    )}
+                    {selectedMsg === (message._id || idx) && (
+                      <span className="message-time-popup">
+                        {dayjs(message.createdAt).format("HH:mm")}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </React.Fragment>
             ))}
             <div ref={messagesEndRef} />
           </>

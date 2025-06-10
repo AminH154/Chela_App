@@ -2,16 +2,18 @@ import { create } from "zustand";
 import { axiosIncteance } from "../lib/axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { io } from "socket.io-client";
 
 
-export const useAuthStore = create((set) => ({
+export const useAuthStore = create((set,get) => ({
   authUser: null,
   isSignIn: false,
   islogIn: false,
   isUpdateProfile: false,
   isChekingAuth: false,
   OnLineUsers:[],
-
+  socket:null,
+  BASE_URL: "http://localhost:5000",
   logIn: async (data) => {
     set({ islogIn: true });
     try {
@@ -21,6 +23,7 @@ export const useAuthStore = create((set) => ({
       setTimeout(() => {
         toast.success("login");
       }, 1000);
+      get().connectSocket();
       console.log(res.data);
       return res.data;
     } catch (error) {
@@ -43,6 +46,7 @@ chekAuth: async () => {
     try {
       const res = await axiosIncteance.get("/auth/isAuth");
       set({ authUser: res.data });
+      get().connectSocket();
       return res.data;
     } catch (error) {
       console.error("Auth check failed:", error);
@@ -57,6 +61,7 @@ chekAuth: async () => {
       await axiosIncteance.post("/auth/logOut");
       set({ authUser: null });
       toast.success("loged out sucessfuly");
+      get().disSocket();
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -71,6 +76,7 @@ chekAuth: async () => {
         autoClose: 2000,
         position: "top-center",
       });
+      get().connectSocket();
       return res.data;
     } catch (error) {
       console.error("Signup error:", error);
@@ -100,7 +106,18 @@ chekAuth: async () => {
     }finally{
       set({isUpdateProfile : false})
     }
-   
-
-  }
+  },
+  connectSocket :()=>{
+    const {authUser,BASE_URL}=get();
+    if (!authUser || get().socket?.connected) return;
+    const socket = io(BASE_URL)
+    socket.connect()
+  },
+  disSocket:()=>{
+    const {socket}=get();
+    if (socket) {
+      socket.disconnect();
+      set({socket:null});
+    }
+  },
 }));

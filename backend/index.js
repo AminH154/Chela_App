@@ -6,9 +6,10 @@ import authRoutes from './routes/auth.route.js';
 import cookieParser from 'cookie-parser';
 import messageRoutes from './routes/message.route.js';
 import cors from "cors";
+import {app,server} from './lib/socket.js'; 
 
 
-const app = express();
+
 
 app.use(express.json({ limit: '5mb' }));
 dotenv.config();
@@ -18,7 +19,7 @@ app.use(cors({
     credentials:true,
 }))
 
-app.listen(process.env.PORT,()=>{
+server.listen(process.env.PORT,()=>{
     console.log("Server is running on port 5000")
 })
 

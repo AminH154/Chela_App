@@ -3,12 +3,15 @@ import "./LeftSideBar.css";
 import { assets } from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { useChatStore } from "../../store/useChatStore";
-import { useAuthStore } from './../../store/useAuthStore';
+import { useAuthStore } from "./../../store/useAuthStore";
 
 const LeftSideBar = () => {
   const navigate = useNavigate();
-  const { selectedUser, GetUsers,users, isUserLoding, setSelectedUser } = useChatStore();
+  const { logOut } = useAuthStore();
+  const { selectedUser, GetUsers, users, isUserLoding, setSelectedUser } =
+    useChatStore();
   const { OnLineUsers } = useAuthStore();
+
   useEffect(() => {
     GetUsers();
   }, [GetUsers]);
@@ -30,21 +33,37 @@ const LeftSideBar = () => {
           <div className="menu_list">
             <p onClick={() => navigate("/profileUpdate")}>Edit Profile</p>
             <hr />
-            <p>Logout</p>
+            <p onClick={logOut}>Logout</p>
           </div>
         </div>
       </div>
+
       <div className="ls_search">
         <img src={assets.search} alt="" />
         <input type="text" placeholder="Search ..." />
       </div>
+      <div className="online_users">
+        <input type="checkbox" id="onlineUsers" />
+        <label htmlFor="onlineUsers">En ligne</label>
+      </div>
       <div className="ls-list">
         <div className="friends">
           {users?.map((user) => (
-            <button key={user._id} onClick={() => setSelectedUser(user)} 
-            className={`friend ${selectedUser?._id === user._id ? "active" : ""}`}>
-              
-              <img src={user.profilePic || assets.profile} alt="" />
+            <button
+              key={user._id}
+              onClick={() => setSelectedUser(user)}
+              className={`friend ${
+                selectedUser?._id === user._id ? "active" : ""
+              }`}
+            >
+              <div className="avatar-status-wrapper">
+                <img src={user.profilePic || assets.profile} alt="" />
+                <span
+                  className={`status-indicator ${
+                    OnLineUsers.includes(user._id) ? "online" : "offline"
+                  }`}
+                ></span>
+              </div>
               <div>
                 <p>{user.fullName || "User"}</p>
                 {OnLineUsers.includes(user._id) ? (

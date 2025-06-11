@@ -3,7 +3,7 @@ import { axiosIncteance } from "../lib/axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { io } from "socket.io-client";
-
+const BASE_URL = "http://localhost:5000";
 
 export const useAuthStore = create((set,get) => ({
   authUser: null,
@@ -13,19 +13,32 @@ export const useAuthStore = create((set,get) => ({
   isChekingAuth: false,
   OnLineUsers:[],
   socket:null,
-  BASE_URL: "http://localhost:5000",
+  
   logIn: async (data) => {
     set({ islogIn: true });
     try {
       const res = await axiosIncteance.post("/auth/logIn", data);
-      set({ authUser: res.data });
+      console.log("Full login response:", res); 
+      // Ensure we have the correct user ID
+      const userData = res.data;
+      if (!userData || !userData._id) {
+        console.error("Invalid user data received:", userData);
+        throw new Error("Invalid user data received from server");
+      }
+      
+      set({ authUser: userData });
+      console.log("Auth user set to:", userData);
 
       setTimeout(() => {
         toast.success("login");
       }, 1000);
-      get().connectSocket();
-      console.log(res.data);
-      return res.data;
+      
+      // Delay socket connection slightly to ensure state is updated
+      setTimeout(() => {
+        get().connectSocket();
+      }, 100);
+      
+      return userData;
     } catch (error) {
       console.error("Login error:", error.response?.data || error);
       toast.success(
@@ -108,16 +121,45 @@ chekAuth: async () => {
     }
   },
   connectSocket :()=>{
-    const {authUser,BASE_URL}=get();
-    if (!authUser || get().socket?.connected) return;
-    const socket = io(BASE_URL)
-    socket.connect()
+    const {authUser}=get();
+    if (!authUser) {
+      return;
+    }
+    if (!authUser.id) {
+      return;
+    }
+
+    if (get().socket?.connected) {
+      console.log("Socket already connected");
+      return;
+    }
+
+    console.log("Attempting to connect socket with user ID:", authUser.id);
+    const socket = io(BASE_URL, {
+      query: {
+        userId: authUser.id
+      },
+      transports: ['websocket'],
+      reconnection: true
+    });
+
+    socket.on('connect', () => {
+      console.log("Socket connected successfully");
+    });
+
+    socket.on('connect_error', (error) => {
+      console.error("Socket connection error:", error);
+    });
+
+    socket.connect();
+    set({ socket });
+    socket.on("getOnlineUsers", (userIds) => {
+      set({ OnLineUsers : userIds });
+      console.log("Online users:", userIds);
+    });
   },
   disSocket:()=>{
-    const {socket}=get();
-    if (socket) {
-      socket.disconnect();
-      set({socket:null});
-    }
-  },
+    if (get().socket?.connected) get().socket.disconnect();
+    set({ socket: null });
+  }
 }));

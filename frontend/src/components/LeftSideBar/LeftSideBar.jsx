@@ -11,6 +11,7 @@ const LeftSideBar = () => {
   const { selectedUser, GetUsers, users, isUserLoding, setSelectedUser } =
     useChatStore();
   const { OnLineUsers } = useAuthStore();
+  console.log("OnLineUsers:", OnLineUsers);
 
   useEffect(() => {
     GetUsers();

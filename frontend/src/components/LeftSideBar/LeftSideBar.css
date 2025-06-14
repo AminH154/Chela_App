@@ -1,4 +1,3 @@
-
 .leftSideBar {
     padding: 20px;
     background-color: #f9f9f9; 
@@ -90,9 +89,7 @@
     transition: background 0.2s, border-left 0.2s;
 }
 
-.friend.active img {
-    border: 2px solid #596aff;
-}
+
 
 .friends button:hover {
     background: #f0f4ff;
@@ -103,7 +100,6 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    
 }
 
 .friends button p {
@@ -115,6 +111,7 @@
     font-size: 12px;
     color: #6c6c6c;
 }
+
 .leftSideBar .menu {
     position: relative;
     padding: 10px 0px;
@@ -159,7 +156,7 @@
     transform: translateY(0); 
 }
 
-
+/* Online users filter */
 .online_users {
   display: flex;
   align-items: center;
@@ -219,6 +216,8 @@
     transform: translateY(0) scale(1);
   }
 }
+
+/* Avatar + status indicator */
 .avatar-status-wrapper {
   position: relative;
   display: inline-block;
@@ -241,7 +240,7 @@
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  border: 2px solid #fff;
+  border: 1px solid #fff;
   background: #d3d3d3;
   box-shadow: 0 1px 4px rgba(89,106,255,0.10);
   transition: background 0.3s, box-shadow 0.3s;
@@ -253,6 +252,27 @@
 }
 
 .status-indicator.offline {
-  background: red;
+  background: #ff3b30;
   box-shadow: none;
+}
+
+/* Online/offline text */
+.online {
+  color: #4cd964;
+  font-size: 13px;
+  font-weight: 600;
+  margin-left: 2px;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 4px #e6edff33;
+  transition: color 0.2s;
+}
+
+.offline {
+  color: #b0b0b0;
+  font-size: 13px;
+  font-weight: 500;
+  margin-left: 2px;
+  letter-spacing: 0.2px;
+  text-shadow: none;
+  transition: color 0.2s;
 }

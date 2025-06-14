@@ -62,9 +62,9 @@ const Chat = () => {
         <ChatHeader />
         <div className="chat-messages">
           <ChatSkeletons />
-          <div className="chat-input-container">
-            <ChatInput />
-          </div>
+        </div>
+        <div className="chat-input-container">
+          <ChatInput />
         </div>
       </div>
     );
@@ -129,9 +129,9 @@ const Chat = () => {
         ) : (
           <div className="no-messages">No messages yet</div>
         )}
-        <div className="chat-input-container">
-          <ChatInput />
-        </div>
+      </div>
+      <div className="chat-input-container">
+        <ChatInput />
       </div>
     </div>
   );

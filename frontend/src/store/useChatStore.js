@@ -52,9 +52,6 @@ export const useChatStore = create((set, get)=>({
         try{
             const res = await axiosIncteance.post(`/message/send/${selectedUser._id}`, MessageData);
             console.log("Message sent successfully:", res.data);
-            set((state) => ({
-                messages: [...state.messages, res.data]
-            }));
         }catch(error){
             console.error("Error sending message:", error);
             toast.error(error.response?.data?.message || "Failed to send message");
@@ -77,10 +74,8 @@ export const useChatStore = create((set, get)=>({
         
         socket.on("newMessage", (newMessage) => {
             console.log("Received new message:", newMessage);
-          
             if (newMessage.senderMessage === selectedUser._id || newMessage.recivedMessage === selectedUser._id) {
                 set((state) => {
-                   ates
                     const messageExists = state.messages.some(msg => msg._id === newMessage._id);
                     if (messageExists) {
                         return state;

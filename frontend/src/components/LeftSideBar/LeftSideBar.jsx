@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./LeftSideBar.css";
 import { assets } from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import { useAuthStore } from "./../../store/useAuthStore";
 const LeftSideBar = () => {
   const navigate = useNavigate();
   const { logOut } = useAuthStore();
+  const [ShowOnlineUsers, setShowOnlineUsers] = useState(false);
   const { selectedUser, GetUsers, users, isUserLoding, setSelectedUser } =
     useChatStore();
   const { OnLineUsers } = useAuthStore();
@@ -16,6 +17,9 @@ const LeftSideBar = () => {
   useEffect(() => {
     GetUsers();
   }, [GetUsers]);
+  const filteredUsers = ShowOnlineUsers
+    ? users.filter((user) => OnLineUsers.includes(user._id))
+    : users;
 
   if (isUserLoding) return <div className="loader-rotate">Loading...</div>;
 
@@ -44,12 +48,12 @@ const LeftSideBar = () => {
         <input type="text" placeholder="Search ..." />
       </div>
       <div className="online_users">
-        <input type="checkbox" id="onlineUsers" />
+        <input type="checkbox" id="onlineUsers" onClick={() => setShowOnlineUsers(!ShowOnlineUsers)} />
         <label htmlFor="onlineUsers">En ligne</label>
       </div>
       <div className="ls-list">
         <div className="friends">
-          {users?.map((user) => (
+          {filteredUsers?.map((user) => (
             <button
               key={user._id}
               onClick={() => setSelectedUser(user)}

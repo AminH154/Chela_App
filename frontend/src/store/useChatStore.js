@@ -3,6 +3,7 @@ import {create}
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { axiosIncteance } from "../lib/axios";
+import { useAuthStore } from "./useAuthStore";
 
 export const useChatStore = create((set, get)=>({
     messages :[],
@@ -47,14 +48,55 @@ export const useChatStore = create((set, get)=>({
         set({selectedUser});
     },
     SendMessage:async(MessageData)=>{
-        const { selectedUser,messages } = get();
+        const { selectedUser } = get();
         try{
-            const res =await axiosIncteance.post(`/message/send/${selectedUser._id}`, MessageData);
-            set({
-                messages: [...messages,res.data],
-            });
+            const res = await axiosIncteance.post(`/message/send/${selectedUser._id}`, MessageData);
+            console.log("Message sent successfully:", res.data);
+            set((state) => ({
+                messages: [...state.messages, res.data]
+            }));
         }catch(error){
+            console.error("Error sending message:", error);
             toast.error(error.response?.data?.message || "Failed to send message");
         }
-    }
+    },
+    SubscribeToMessages:()=>{
+        const {selectedUser} = get();
+        if(!selectedUser) {
+            console.log("No selected user, cannot subscribe to messages");
+            return;
+        }
+        const socket = useAuthStore.getState().socket;
+        if(!socket) {
+            console.log("No socket connection available");
+            return;
+        }
+        console.log("Subscribing to messages for user:", selectedUser._id);
+        
+        socket.off("newMessage");
+        
+        socket.on("newMessage", (newMessage) => {
+            console.log("Received new message:", newMessage);
+          
+            if (newMessage.senderMessage === selectedUser._id || newMessage.recivedMessage === selectedUser._id) {
+                set((state) => {
+                   ates
+                    const messageExists = state.messages.some(msg => msg._id === newMessage._id);
+                    if (messageExists) {
+                        return state;
+                    }
+                    return {
+                        messages: [...state.messages, newMessage]
+                    };
+                });
+            }
+        });
+    },
+    UnsubscribeFromMessages:()=>{
+        const socket = useAuthStore.getState().socket;
+        if(socket) {
+            console.log("Unsubscribing from messages");
+            socket.off("newMessage");
+        }
+    },
 }))

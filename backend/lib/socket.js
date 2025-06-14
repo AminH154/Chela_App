@@ -4,6 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import { use } from 'react';
 
+
 const app = express();
 const server = http.createServer(app);
 
@@ -12,7 +13,9 @@ const io = new Server(server, {
         origin: ["http://localhost:5173"], 
     }
 });
-
+export function getReceiverSocketId(userId){
+    return userSocketMap[userId];
+}
 //used to store online users 
 
 const userSocketMap = {}

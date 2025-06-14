@@ -9,7 +9,7 @@ import ChatInput from "../../components/ChatInput/ChatInput";
 import ChatSkeletons from "../ChatSkeletons/ChatSkeletons";
 
 const Chat = () => {
-  const { messages, selectedUser, isMessagesLoading, getMessages } =
+  const { messages, selectedUser, isMessagesLoading, getMessages ,SubscribeToMessages, UnsubscribeFromMessages } =
     useChatStore();
   const { authUser } = useAuthStore();
   const messagesEndRef = useRef(null);
@@ -24,9 +24,22 @@ const Chat = () => {
   }, [messages]);
 
   useEffect(() => {
-    useChatStore.setState({ messages: [] });
-    getMessages(selectedUser._id);
-  }, [selectedUser, getMessages]);
+    if (!selectedUser?._id) return;
+
+    const initializeChat = async () => {
+      try {
+        await getMessages(selectedUser._id);
+        SubscribeToMessages();
+      } catch (error) {
+        console.error("Error initializing chat:", error);
+      }
+    };
+
+    initializeChat();
+    return () => {
+      UnsubscribeFromMessages();
+    };
+  }, [selectedUser, getMessages, SubscribeToMessages, UnsubscribeFromMessages]);
 
   // Group messages by date
   const groupMessagesByDate = (messages) => {

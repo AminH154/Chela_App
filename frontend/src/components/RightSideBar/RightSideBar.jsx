@@ -7,7 +7,11 @@ import { useChatStore } from "../../store/useChatStore";
 const RightSideBar = () => {
   const { logOut, authUser } =useAuthStore();
   const {selectedUser} = useChatStore();
-
+  const {onLineUsers} = useAuthStore();
+  const isOnline =
+    selectedUser && onLineUsers
+      ? onLineUsers.includes(selectedUser._id)
+      : false;
   return (
     <div className="rightSideBar">
       <div className="rs_nav">
@@ -17,14 +21,18 @@ const RightSideBar = () => {
             src={selectedUser?.profilePic || authUser?.profilePic}
             className="user-profile-image"
           />
-          <div className="status"></div>
+          {selectedUser ? <span className={`R ${isOnline ? "online" : "offline"}`}></span> : 
+          <span className="R online"></span>}
         </div>
         <h3>{selectedUser?.fullName || authUser?.fullName}</h3>
         <p>{selectedUser?.bio || authUser?.bio }</p>
       </div>
       <hr />
-      <p>Media</p>
-      <p>Fichier et contenus multimédias</p>
+      <div className="media-section">
+         <p>Media</p>
+          <p>Fichier et contenus multimédias</p>
+      </div>
+     
       <div className="deconnecte">
         <img
           src={authUser?.profilePic || assets.utilisateur}

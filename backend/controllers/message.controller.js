@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import Message from "../models/message.model.js";
 import cloudinary from "../lib/cloudinary.config.js";
+import { getReceiverSocketId,io } from "../lib/socket.js";
 
 
 export const GetUsers =async (req,res)=>{
@@ -61,6 +62,18 @@ export const PostMessages = async (req, res) => {
         });
 
         await NewMessages.save();
+        
+        // Get socket IDs for both sender and receiver
+        const senderSocketId = getReceiverSocketId(senderMessage);
+        const receiverSocketId = getReceiverSocketId(recivedMessage);
+        
+        // Emit to both sender and receiver if they are online
+        if (senderSocketId) {
+            io.to(senderSocketId).emit("newMessage", NewMessages);
+        }
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit("newMessage", NewMessages);
+        }
 
         res.status(201).json(NewMessages);
 

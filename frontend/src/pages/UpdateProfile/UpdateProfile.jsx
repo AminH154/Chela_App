@@ -3,12 +3,13 @@ import "./UpdateProfile.css";
 import { assets } from "../../assets/assets";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore} from "../../store/useAuthStore";
-
+import { useAuthStore } from "../../store/useAuthStore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 const ProfileUpdates = () => {
   const { authUser, ProfileUpdate } = useAuthStore();
   const Navigate = useNavigate();
-
 
   const defaultPic = authUser?.profilePic || assets.utilisateur;
   const [profilePic, SetprofilePic] = useState(defaultPic);
@@ -29,7 +30,7 @@ const ProfileUpdates = () => {
     e.preventDefault();
     setIsLoading(true);
     await ProfileUpdate(Values);
-     setIsLoading(false);
+    setIsLoading(false);
     Navigate("/");
   };
 
@@ -61,11 +62,21 @@ const ProfileUpdates = () => {
       <div className="profile_container">
         <form onSubmit={HandleSave}>
           <div className="profile_header">
-            <h1>Update Profile</h1>
-            <label htmlFor="avatar">
+            <div className="back">
+              <FontAwesomeIcon
+                icon={faArrowLeft}
+                className="animated-icon"
+                onClick={() => Navigate("/")}
+              />
+              <h1>Update Profile</h1>
+            </div>
+            <div className="avatar">
+              <label htmlFor="avatar">
               <img src={profilePic} alt="Avatar" />
+              <FontAwesomeIcon icon={faImage} />
               <p>Upload Image</p>
             </label>
+
             <input
               name="avatar"
               type="file"
@@ -74,6 +85,9 @@ const ProfileUpdates = () => {
               accept="image/*"
               style={{ display: "none" }}
             />
+
+              </div>
+            
           </div>
           <div className="input">
             <input
@@ -89,7 +103,7 @@ const ProfileUpdates = () => {
               onChange={HandleChange}
               placeholder="Write a portfolio bio"
             />
-                <button type="submit" disabled={isLoading}>
+            <button type="submit" disabled={isLoading}>
               {isLoading ? "Saving..." : "Upload"}
             </button>
           </div>

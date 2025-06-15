@@ -8,6 +8,7 @@ import { useAuthStore } from "./../../store/useAuthStore";
 const LeftSideBar = () => {
   const navigate = useNavigate();
   const { logOut } = useAuthStore();
+  const [search, setSearch] = useState("");
   const [ShowOnlineUsers, setShowOnlineUsers] = useState(false);
   const { selectedUser, GetUsers, users, isUserLoding, setSelectedUser } =
     useChatStore();
@@ -17,9 +18,13 @@ const LeftSideBar = () => {
   useEffect(() => {
     GetUsers();
   }, [GetUsers]);
-  const filteredUsers = ShowOnlineUsers
-    ? users.filter((user) => OnLineUsers.includes(user._id))
-    : users;
+   const filteredUsers = users
+    .filter(user =>
+      user.fullName.toLowerCase().includes(search.toLowerCase())
+    )
+    .filter(user =>
+      ShowOnlineUsers ? OnLineUsers.includes(user._id) : true
+    );
 
   if (isUserLoding) return <div className="loader-rotate">Loading...</div>;
 
@@ -45,10 +50,21 @@ const LeftSideBar = () => {
 
       <div className="ls_search">
         <img src={assets.search} alt="" />
-        <input type="text" placeholder="Search ..." />
+        <input
+          type="text"
+          placeholder="Search ..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="search-input"
+        />
       </div>
       <div className="online_users">
-        <input type="checkbox" id="onlineUsers" onClick={() => setShowOnlineUsers(!ShowOnlineUsers)} />
+        <input
+          type="checkbox"
+          id="onlineUsers"
+          checked={ShowOnlineUsers}
+          onClick={() => setShowOnlineUsers(!ShowOnlineUsers)}
+        />
         <label htmlFor="onlineUsers">En ligne</label>
       </div>
       <div className="ls-list">

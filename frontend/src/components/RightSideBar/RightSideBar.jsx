@@ -26,7 +26,7 @@ const RightSideBar = () => {
         <div style={{ position: "relative" }}>
           <img
             alt="User Profile"
-            src={selectedUser?.profilePic || authUser?.profilePic}
+            src={selectedUser?.profilePic || authUser?.profilePic || assets.utilisateur}
             className="user-profile-image"
           />
           <span className={`R ${isOnline ? "online" : "offline"}`}></span>

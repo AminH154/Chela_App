@@ -61,7 +61,7 @@ const Login = () => {
         <div className="login_container_left">
           <img src={assets.icon} alt="Logo" height={100} width={100} />
           <p className="text">
-            <span>U</span>chat_ai
+            <span>C</span>hella_chat
           </p>
         </div>
         <div className="login_container_right">

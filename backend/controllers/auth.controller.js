@@ -2,7 +2,7 @@ import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../lib/utils.js";
 import cloudinary from "../lib/cloudinary.config.js";
-
+import { sendEmail } from "../lib/mailer.js";
 export const SignUp = async (req, res) => {
   const { email, fullName, password } = req.body;
   try {
@@ -17,6 +17,13 @@ export const SignUp = async (req, res) => {
     if (existeUser) {
       return res.status(400).json({ message: "Email is already exist" });
     }
+
+    const code=Math.floor(100000 + Math.random() * 900000);
+    await sendEmail(email, "Verification Code", `Your verification code is ${code}`);
+    if (!code) {
+      return res.status(500).json({ message: "Failed to generate verification code" });
+    }
+    
 
     const hashPassword = await bcrypt.hash(password, 10);
     const newUser = new User({

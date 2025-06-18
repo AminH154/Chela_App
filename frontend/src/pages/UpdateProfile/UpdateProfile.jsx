@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { faImage } from "@fortawesome/free-solid-svg-icons";
 const ProfileUpdates = () => {
   const { authUser, ProfileUpdate } = useAuthStore();
   const Navigate = useNavigate();
@@ -37,7 +36,6 @@ const ProfileUpdates = () => {
   const HandleImageChange = async (e) => {
     const file = e.target.files[0];
     if (!file) {
-      // Si aucune image sélectionnée, on remet la photo par défaut (base64)
       SetprofilePic(assets.utilisateur);
       SetValues({
         ...Values,
@@ -73,7 +71,6 @@ const ProfileUpdates = () => {
             <div className="avatar">
               <label htmlFor="avatar">
               <img src={profilePic} alt="Avatar" />
-              <FontAwesomeIcon icon={faImage} />
               <p>Upload Image</p>
             </label>
 

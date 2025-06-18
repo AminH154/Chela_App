@@ -15,11 +15,18 @@
   pointer-events: auto;
   overflow-y: auto;
 }
+
 .chat_message form {
   display: flex;
   align-items: center;
   width: 100%;
   gap: 10px;
+}
+
+.chat_message .img {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
 }
 
 .chat_message .img img {

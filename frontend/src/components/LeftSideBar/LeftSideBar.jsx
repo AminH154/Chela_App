@@ -4,7 +4,6 @@ import { assets } from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { useChatStore } from "../../store/useChatStore";
 import { useAuthStore } from "./../../store/useAuthStore";
-
 const LeftSideBar = () => {
   const navigate = useNavigate();
   const { logOut } = useAuthStore();

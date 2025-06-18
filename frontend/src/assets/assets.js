@@ -1,4 +1,3 @@
-
 import icon from './icon.png';
 import search from './search.png';
 import menu from './menu.png';
@@ -28,4 +27,5 @@ export const assets = {
     icon,
     menu,
     utilisateur,
+
 }

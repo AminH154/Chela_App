@@ -7,6 +7,7 @@ const BASE_URL = "http://localhost:5000";
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
+  verifierEmail: null,
   isSignIn: false,
   islogIn: false,
   isUpdateProfile: false,
@@ -69,12 +70,9 @@ export const useAuthStore = create((set, get) => ({
     set({ isSignIn: true });
     try {
       const res = await axiosIncteance.post("/auth/signUp", data);
-      set({ authUser: res.data });
-      toast.success("Compte créé avec succès", {
-        autoClose: 2000,
-        position: "top-center",
-      });
-      get().connectSocket();
+
+      toast.success(res.data.message);
+      console.log("Full signup response:", res.data);
       return res.data;
     } catch (error) {
       console.error("Signup error:", error);
@@ -130,7 +128,6 @@ export const useAuthStore = create((set, get) => ({
 
     socket.on("getOnlineUsers", (userIds) => {
       set({ OnLineUsers: userIds });
-    
     });
   },
 
@@ -140,5 +137,27 @@ export const useAuthStore = create((set, get) => ({
       socket.disconnect();
     }
     set({ socket: null, OnLineUsers: [] });
+  },
+  verfierEmail: async (value) => {
+    try {
+      const res = await axiosIncteance.post("/auth/verify", {
+        code: value.code,
+      });
+      get().connectSocket();
+      toast.success("compte vérifié avec succès", res.data.message);
+      set({ verifierEmail: res.data });
+    } catch (error) {
+      toast.error(
+        "Échec de la vérification de l'email",
+        error.response?.data?.message || "Une erreur s'est produite"
+      );
+    }
+  },
+  handleUnload: async (value) => {
+    if (value?.code) {
+      const data = JSON.stringify({ code: value.code });
+      console.log("Sending pending user cancel data:", data);
+      navigator.sendBeacon("/auth/pendingUserCancel", data);
+    }
   },
 }));

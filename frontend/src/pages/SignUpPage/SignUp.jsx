@@ -7,12 +7,13 @@ import "./SignUp.css"
 import { useAuthStore } from "../../store/useAuthStore";
 const SignUp = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [values, setValues] = useState({
     email: "",
     fullName: "",
     password: "",
   });
-   const {signIn} = useAuthStore();
+  const { signIn } = useAuthStore();
 
 
 
@@ -27,10 +28,17 @@ const SignUp = () => {
     e.preventDefault();
     if (handleValidation()) {
       console.log("handleSubmit called with values:", values);
-      signIn(values);
-     
+      setIsLoading(true);
+      try {
+        await signIn(values);
+          navigate("/verify");
+      } catch (error) {
+        console.error("SignIn error:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
   };
-};
 
   const handleValidation = () => {
     const { fullName, email, password } = values;
@@ -67,7 +75,7 @@ const SignUp = () => {
           </p>
         </div>
         <div className="login_container_right">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} >
             <div className="input">
               <h1>Register</h1>
               <input
@@ -91,8 +99,11 @@ const SignUp = () => {
                 type="password"
                 placeholder="Password"
               />
-              <button type="submit">Register</button>
-              <p onClick={() => navigate("/")}>
+            
+              <button type="submit">{
+                isLoading ? "Loading..." : "Register"
+              }</button>
+              <p onClick={() => navigate("/login")}>
                 have an account? <span>Click here</span>
               </p>
             </div>

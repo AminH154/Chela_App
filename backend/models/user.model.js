@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const userSchema = new mongoose.Schema(
     {
         email: {
@@ -28,7 +27,11 @@ const userSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+const PendingUserSchema = new mongoose.Schema({ email: String,
+  code: String,
+  userData: Object, // ou détaille les champs nécessaires
+  codeExpires: Date,
+});
 
-const User = mongoose.model("User",userSchema);
-
-export default User;
+export const User = mongoose.model("User",userSchema);
+export const PendingUser = mongoose.model("PendingUser", PendingUserSchema);
